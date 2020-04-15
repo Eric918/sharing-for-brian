@@ -1,0 +1,62 @@
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import logo from './assets/logo.png';
+import * as ImagePicker from 'expo-image-picker';
+
+ export default function App() {
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    console.log(pickerResult);
+  }
+  return (
+    <View style={styles.container}>
+      <Image source={logo} style={styles.logo} />
+      <Text style ={styles.TitleBlock}>Welcome to App attempt number 1!         Click the button below for more details</Text>
+      <TouchableOpacity
+          onPress={openImagePickerAsync}
+          style={styles.button}>
+        <Text style={styles.buttonText}>Press me</Text>
+
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width:300,
+    height:300,
+  },
+  TitleBlock: {
+    color: '#888',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    textShadowRadius: 4,
+
+  },
+  button: {
+    backgroundColor: '#ADADAD',
+    padding:8,
+    borderRadius:5,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#888',
+  }
+
+});
